@@ -3,7 +3,7 @@ import pygame
 import os
 
 from config import Settings
-from src.utils.image_info import ImageInfo
+from src.classes.image_info import ImageInfo
 
 
 font = pygame.font.Font(os.path.join(Settings.FONT_DIR, 'Kenney Space.ttf'), 35)

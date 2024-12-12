@@ -1,19 +1,19 @@
 import pygame
 
 from config import Settings
-from src.assets.fonts.fonts_info import font
-from src.assets.images.img_info import (img_info_rocket, img_rocket, img_accelerating_rocket, img_background,
-                                        img_intro, img_info_intro)
-from src.assets.rocket import SpaceRocket
-from src.utils.helpers import asteroid_spawner, group_collide, process_sprite_group, group_group_collide, draw_on_screen
+
+from src.classes.rocket import SpaceRocket
+from src.utils import helpers
+from src.utils import resources
+
 
 def game():
-
     LIVES = Settings.LIVES
     SCORE = Settings.SCORE
     running = True
-    spaceRocket = SpaceRocket([Settings.WIDTH / 2, Settings.HEIGHT / 2], [0, 0], 0, img_rocket, img_accelerating_rocket,
-                              img_info_rocket)
+    space_rocket = SpaceRocket([Settings.WIDTH / 2, Settings.HEIGHT / 2], [0, 0], 0, resources.img_rocket,
+                               resources.img_accelerating_rocket,
+                               resources.img_info_rocket)
     asteroids_group = set([])
     missile_group = set([])
     explosion_group = set([])
@@ -23,65 +23,73 @@ def game():
 
     screen = pygame.display.set_mode((Settings.WIDTH, Settings.HEIGHT))
 
-    draw_on_screen(screen, img_intro, img_info_intro.get_center(),
-                   img_info_intro.get_size(), [Settings.WIDTH / 2, Settings.HEIGHT / 2],
-                   img_info_intro.get_size())
+    if not helpers.show_intro(screen, resources.img_background, resources.img_intro, resources.img_info_intro):
+        return
 
     while running:
-        screen.blit(img_background, (0, 0))
+
+        screen.blit(resources.img_background, (0, 0))
 
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
 
             if event.type == ROCK_SPAWN:
                 if LIVES > 0:
-                    asteroid_spawner(asteroids_group, running, spaceRocket)
+                    helpers.asteroid_spawner(asteroids_group, running, space_rocket)
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
-                    spaceRocket.decrement_angle_vel()
-                elif event.key == pygame.K_RIGHT:
-                    spaceRocket.increment_angle_vel()
-                elif event.key == pygame.K_UP:
-                    spaceRocket.set_thrust(True)
-                elif event.key == pygame.K_SPACE:
-                    spaceRocket.shoot(missile_group)
-                elif event.key == pygame.K_RETURN:
-                    if LIVES <= 0:
-                        LIVES = 3
-                        SCORE = 0
+                match event.key:
+                    case pygame.K_LEFT:
+                        space_rocket.decrement_angle_vel()
+                    case pygame.K_RIGHT:
+                        space_rocket.increment_angle_vel()
+                    case pygame.K_UP:
+                        space_rocket.set_thrust(True)
+                    case pygame.K_SPACE:
+                        space_rocket.shoot(missile_group)
+                    case pygame.K_RETURN:
+                        if LIVES <= 0:
+                            LIVES = 3
+                            SCORE = 0
 
             if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    spaceRocket.increment_angle_vel()
-                elif event.key == pygame.K_RIGHT:
-                    spaceRocket.decrement_angle_vel()
-                elif event.key == pygame.K_UP:
-                    spaceRocket.set_thrust(False)
+                match event.key:
+                    case pygame.K_LEFT:
+                        if space_rocket.angle_vel == 0:
+                            continue
+                        space_rocket.increment_angle_vel()
+                    case pygame.K_RIGHT:
+                        if space_rocket.angle_vel == 0:
+                            continue
+                        space_rocket.decrement_angle_vel()
+                    case pygame.K_UP:
+                        space_rocket.set_thrust(False)
 
-        if group_collide(asteroids_group, spaceRocket, explosion_group):
+        if helpers.group_collide(asteroids_group, space_rocket, explosion_group):
             LIVES -= 1
+            space_rocket.reset([Settings.WIDTH / 2, Settings.HEIGHT / 2])
 
-        spaceRocket.draw(screen)
-        process_sprite_group(asteroids_group, screen)
-        process_sprite_group(missile_group, screen)
-        SCORE += group_group_collide(asteroids_group, missile_group, explosion_group)
-        process_sprite_group(explosion_group, screen)
+        if LIVES > 0:
+            space_rocket.draw(screen)
+            space_rocket.update()
 
-        spaceRocket.update()
+        helpers.process_sprite_group(asteroids_group, screen)
+        helpers.process_sprite_group(missile_group, screen)
+        SCORE += helpers.group_group_collide(asteroids_group, missile_group, explosion_group)
+        helpers.process_sprite_group(explosion_group, screen)
 
         if LIVES <= 0:
-            draw_on_screen(screen, img_intro, img_info_intro.get_center(),
-                           img_info_intro.get_size(), [Settings.WIDTH / 2, Settings.HEIGHT / 2],
-                           img_info_intro.get_size())
+            helpers.draw_on_screen(screen, resources.img_intro, resources.img_info_intro.get_center(),
+                                   resources.img_info_intro.get_size(), [Settings.WIDTH / 2, Settings.HEIGHT / 2],
+                                   resources.img_info_intro.get_size())
 
             for asteroid in list(asteroids_group):
                 asteroids_group.remove(asteroid)
 
-        score_render = font.render("Score: " + str(SCORE), True, (255, 255, 255))
+        score_render = resources.font.render("Score: " + str(SCORE), True, (255, 255, 255))
         screen.blit(score_render, (10, 15))
-        lives_render = font.render("Lives: " + str(LIVES), True, (255, 255, 255))
+        lives_render = resources.font.render("Lives: " + str(LIVES), True, (255, 255, 255))
         screen.blit(lives_render, (1660, 15))
 
         pygame.display.update()

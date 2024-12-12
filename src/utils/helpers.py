@@ -9,8 +9,8 @@ from src.utils.resources import img_asteroid, img_info_asteroid, msc_explosion, 
 
 
 def draw_on_screen(screen, image, center_source, width_height_source, center_dest, width_height_dest, rotation=0,
-                   issprite=False):
-    if issprite:
+                   is_sprite=False):
+    if is_sprite:
         left_dest = center_dest[0] - (width_height_dest[0] / 2)
         top_dest = center_dest[1] - (width_height_dest[1] / 2)
         width_dest = width_height_dest[0]
@@ -44,8 +44,8 @@ def asteroid_spawner(asteroids_group, running, spaceRocket):
     if running and len(asteroids_group) < Settings.MAX_ASTEROIDS:
         rock_pos = [random.randrange(0, Settings.WIDTH), random.randrange(0, Settings.HEIGHT)]
         rock_vel = [random.random() * .6 - .3, random.random() * .6 - .3]
-        rock_avel = random.random() * .2 - .1
-        module_sprite = importlib.import_module("src.sprite")
+        rock_avel = random.random() * 0.06 - 0.03
+        module_sprite = importlib.import_module("src.classes.sprite")
         a_rock = module_sprite.Sprite(rock_pos, rock_vel, 0, rock_avel, img_asteroid, img_info_asteroid)
 
         if not a_rock.collide(spaceRocket):
@@ -59,7 +59,7 @@ def group_collide(sp_group, sprite, explosion_group):
         if sp.collide(sprite):
             sp_group.remove(sp)
             collision_happended = True
-            module_sprite = importlib.import_module("src.sprite")
+            module_sprite = importlib.import_module("src.classes.sprite")
             an_explosion = module_sprite.Sprite(sprite.get_position(), [0, 0], 0, 0, img_explosion, img_info_explosion,
                                                 msc_explosion)
             explosion_group.add(an_explosion)
@@ -80,3 +80,25 @@ def group_group_collide(sp_group1, sp_group2, explosion_group):
             no_of_collisions += 1
             sp_group1.discard(sp1)
     return no_of_collisions
+
+
+def show_intro(screen, img_background, img_intro, img_info_intro):
+    intro_running = True
+
+    while intro_running:
+        screen.blit(img_background, (0, 0))
+
+        draw_on_screen(screen, img_intro, img_info_intro.get_center(),
+                       img_info_intro.get_size(), [Settings.WIDTH / 2, Settings.HEIGHT / 2],
+                       img_info_intro.get_size())
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
+                intro_running = False
+
+        pygame.display.flip()
+
+    return True
