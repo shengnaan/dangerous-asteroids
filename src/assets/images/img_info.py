@@ -33,22 +33,22 @@ class ImageInfo:
 
 
 imgInfoSpaceWorld = ImageInfo([400, 300], [800, 600])
-imgSpaceWorld = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgSpaceWorld.jpeg"))
+imgSpaceWorld = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "background.jpeg"))
 
 imgInfoIntroUltimateAsteroids = ImageInfo([200, 150], [400, 300])
-imgIntroUltimateAsteroids = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgIntroUltimateAsteroids.png"))
+imgIntroUltimateAsteroids = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "intro.png"))
 
 imgInfoSpaceRocket = ImageInfo([30, 30], [60, 60], 35)
-imgSpaceRocketNoThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgSpaceRocketNoThrust.png"))
-imgSpaceRocketThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgSpaceRocketThrust.png"))
+imgSpaceRocketNoThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "rocket.png"))
+imgSpaceRocketThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "acceleratingRocket.png"))
 
 imgInfoAsteroidBlack = ImageInfo([45, 45], [90, 90], 40)
-imgAsteroidBlack = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgAsteroidBlack.png"))
+imgAsteroidBlack = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "asteroid.png"))
 
 imgInfoMissile = ImageInfo([5, 5], [10, 10], 3, 50)
-imgMissile = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgMissile.png"))
+imgMissile = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "missile.png"))
 
 imgInfoSpriteExplosion = ImageInfo([64, 64], [128, 128], 17, 24, True)
-imgSpriteExplosion = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "imgSpriteExplosion.png"))
+imgSpriteExplosion = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "explosion.png"))
 
-icon = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "iconUltimateAsteroids.png"))
+icon = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "icon.png"))
