@@ -1,35 +1,12 @@
-import os
-
 import pygame
 
+import os
+
 from config import Settings
+from src.utils.image_info import ImageInfo
 
 
-class ImageInfo:
-    def __init__(self, center, size, radius=0, lifespan=None, animated=False):
-        self.center = center
-        self.size = size
-        self.radius = radius
-        if lifespan:
-            self.lifespan = lifespan
-        else:
-            self.lifespan = float('inf')
-        self.animated = animated
-
-    def get_center(self):
-        return self.center
-
-    def get_size(self):
-        return self.size
-
-    def get_radius(self):
-        return self.radius
-
-    def get_lifespan(self):
-        return self.lifespan
-
-    def get_animated(self):
-        return self.animated
+font = pygame.font.Font(os.path.join(Settings.FONT_DIR, 'Kenney Space.ttf'), 35)
 
 
 img_info_background = ImageInfo([400, 300], [800, 600])
@@ -52,3 +29,18 @@ img_info_explosion = ImageInfo([64, 64], [128, 128], 17, 24, True)
 img_explosion = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "explosion.png"))
 
 icon = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "icon.png"))
+
+
+mscBackgroundTheme = pygame.mixer.Sound(os.path.join(Settings.SOUNDS_DIR, 'mscBackgroundTheme.wav'))
+mscBackgroundTheme.set_volume(0.2)
+if mscBackgroundTheme:
+    mscBackgroundTheme.play(100)
+
+mscSpaceRocketThrust = pygame.mixer.Sound(os.path.join(Settings.SOUNDS_DIR, "mscSpaceRocketThrust.wav"))
+mscSpaceRocketThrust.set_volume(0.9)
+
+mscMissileShot = pygame.mixer.Sound(os.path.join(Settings.SOUNDS_DIR, 'mscMissileShot.wav'))
+mscMissileShot.set_volume(0.2)
+
+mscExplosion = pygame.mixer.Sound(os.path.join(Settings.SOUNDS_DIR, "mscExplosion.wav"))
+mscExplosion.set_volume(0.8)
