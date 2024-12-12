@@ -32,23 +32,23 @@ class ImageInfo:
         return self.animated
 
 
-imgInfoSpaceWorld = ImageInfo([400, 300], [800, 600])
-imgSpaceWorld = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "background.jpeg"))
+img_info_background = ImageInfo([400, 300], [800, 600])
+img_background = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "background.jpeg"))
 
-imgInfoIntroUltimateAsteroids = ImageInfo([200, 150], [400, 300])
-imgIntroUltimateAsteroids = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "intro.png"))
+img_info_intro = ImageInfo([200, 150], [400, 300])
+img_intro = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "intro.png"))
 
-imgInfoSpaceRocket = ImageInfo([30, 30], [60, 60], 35)
-imgSpaceRocketNoThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "rocket.png"))
-imgSpaceRocketThrust = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "acceleratingRocket.png"))
+img_info_rocket = ImageInfo([30, 30], [60, 60], 35)
+img_rocket = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "rocket.png"))
+img_accelerating_rocket = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "acceleratingRocket.png"))
 
-imgInfoAsteroidBlack = ImageInfo([45, 45], [90, 90], 40)
-imgAsteroidBlack = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "asteroid.png"))
+img_info_asteroid = ImageInfo([45, 45], [90, 90], 40)
+img_asteroid = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "asteroid.png"))
 
-imgInfoMissile = ImageInfo([5, 5], [10, 10], 3, 50)
-imgMissile = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "missile.png"))
+img_info_missile = ImageInfo([5, 5], [10, 10], 3, 50)
+img_missile = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "missile.png"))
 
-imgInfoSpriteExplosion = ImageInfo([64, 64], [128, 128], 17, 24, True)
-imgSpriteExplosion = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "explosion.png"))
+img_info_explosion = ImageInfo([64, 64], [128, 128], 17, 24, True)
+img_explosion = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "explosion.png"))
 
 icon = pygame.image.load(os.path.join(Settings.IMAGES_DIR, "icon.png"))

@@ -1,5 +1,5 @@
 from config import Settings
-from src.assets.images.img_info import imgMissile, imgInfoMissile
+from src.assets.images.img_info import img_missile, img_info_missile
 from src.assets.sounds.sounds_info import mscSpaceRocketThrust, mscMissileShot
 from src.sprite import Sprite
 from src.utils.helpers import draw_on_screen, angle_to_vector
@@ -57,7 +57,7 @@ class SpaceRocket:
         forward = angle_to_vector(-self.angle)
         missile_pos = [self.pos[0] + self.radius * forward[0], self.pos[1] + self.radius * forward[1]]
         missile_vel = [self.vel[0] + 6 * forward[0], self.vel[1] + 6 * forward[1]]
-        a_missile = Sprite(missile_pos, missile_vel, self.angle, 0, imgMissile, imgInfoMissile, mscMissileShot)
+        a_missile = Sprite(missile_pos, missile_vel, self.angle, 0, img_missile, img_info_missile, mscMissileShot)
         missile_group.add(a_missile)
 
     def get_position(self):

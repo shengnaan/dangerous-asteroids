@@ -5,8 +5,8 @@ import random
 import pygame
 
 from config import Settings
-from src.assets.images.img_info import imgInfoAsteroidBlack, imgAsteroidBlack, imgSpriteExplosion, \
-    imgInfoSpriteExplosion
+from src.assets.images.img_info import img_info_asteroid, img_asteroid, img_explosion, \
+    img_info_explosion
 from src.assets.sounds.sounds_info import mscExplosion
 
 
@@ -48,7 +48,7 @@ def asteroid_spawner(asteroids_group, running, spaceRocket):
         rock_vel = [random.random() * .6 - .3, random.random() * .6 - .3]
         rock_avel = random.random() * .2 - .1
         module_sprite = importlib.import_module("src.sprite")
-        a_rock = module_sprite.Sprite(rock_pos, rock_vel, 0, rock_avel, imgAsteroidBlack, imgInfoAsteroidBlack)
+        a_rock = module_sprite.Sprite(rock_pos, rock_vel, 0, rock_avel, img_asteroid, img_info_asteroid)
 
         if not a_rock.collide(spaceRocket):
             asteroids_group.add(a_rock)
@@ -62,8 +62,8 @@ def group_collide(sp_group, sprite, explosion_group):
             sp_group.remove(sp)
             collision_happended = True
             module_sprite = importlib.import_module("src.sprite")
-            an_explosion = module_sprite.Sprite(sprite.get_position(), [0, 0], 0, 0, imgSpriteExplosion, imgInfoSpriteExplosion,
-                                  mscExplosion)
+            an_explosion = module_sprite.Sprite(sprite.get_position(), [0, 0], 0, 0, img_explosion, img_info_explosion,
+                                                mscExplosion)
             explosion_group.add(an_explosion)
     return collision_happended
 
