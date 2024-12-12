@@ -1,12 +1,10 @@
-import pygame
-
-from src.assets.images.img_info import icon
-
 
 if __name__ == "__main__":
+    import pygame
     pygame.init()
     pygame.mixer.init()
 
+    from src.utils.resources import icon
     pygame.display.set_caption("Asteroids")
     pygame.display.set_icon(icon)
 
