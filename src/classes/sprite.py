@@ -3,7 +3,35 @@ from src.utils.helpers import draw_on_screen, dist
 
 
 class Sprite:
+    """
+    Класс, представляющий спрайт в игре.
+
+    Атрибуты:
+        pos (list[float]): Позиция спрайта на экране в координатах [x, y].
+        vel (list[float]): Скорость спрайта в координатах [vx, vy].
+        angle (float): Угол поворота спрайта в радианах.
+        angle_vel (float): Угловая скорость вращения спрайта.
+        image (Surface): Изображение спрайта.
+        image_center (tuple[int, int]): Центр изображения спрайта.
+        image_size (tuple[int, int]): Размер изображения спрайта (ширина, высота).
+        radius (int): Радиус коллизии спрайта.
+        lifespan (int): Продолжительность жизни спрайта в кадрах.
+        animated (bool): Флаг, указывающий, является ли спрайт анимационным.
+        age (int): Текущий возраст спрайта.
+    """
+
     def __init__(self, pos, vel, ang, ang_vel, image, info, sound=None):
+        """
+        Инициализирует спрайт с заданными параметрами.
+
+        :param pos: Позиция спрайта на экране.
+        :param vel: Скорость спрайта.
+        :param ang: Начальный угол поворота спрайта.
+        :param ang_vel: Начальная угловая скорость.
+        :param image: Изображение спрайта.
+        :param info: Объект, содержащий информацию о спрайте (центр, размер, радиус и т.д.).
+        :param sound: Звук, который будет воспроизведен при создании спрайта (по умолчанию None).
+        """
         self.pos = [pos[0], pos[1]]
         self.vel = [vel[0], vel[1]]
         self.angle = ang
@@ -19,12 +47,28 @@ class Sprite:
             sound.play()
 
     def get_position(self):
+        """
+        Возвращает текущую позицию спрайта.
+
+        :return: Позиция спрайта [x, y].
+        """
         return self.pos
 
     def get_radius(self):
+        """
+        Возвращает радиус спрайта.
+
+        :return: Радиус спрайта.
+        """
         return self.radius
 
     def collide(self, object2):
+        """
+        Проверяет, сталкивается ли текущий спрайт с другим объектом.
+
+        :param object2: Другой спрайт для проверки столкновения.
+        :return: True, если спрайты столкнулись, иначе False.
+        """
         r1 = self.get_radius()
         r2 = object2.get_radius()
 
@@ -33,6 +77,11 @@ class Sprite:
         return dist(pos1, pos2) < (r1 + r2)
 
     def draw(self, screen):
+        """
+        Рисует спрайт на экране.
+
+        :param screen: Поверхность экрана, на которой будет рисоваться спрайт.
+        """
         factor = 1
         if self.animated:
             factor *= self.age
@@ -44,6 +93,11 @@ class Sprite:
                            self.angle)
 
     def update(self):
+        """
+        Обновляет состояние спрайта: поворот, движение, возраст.
+
+        :return: True, если спрайт достиг своей продолжительности жизни, иначе False.
+        """
         self.angle += self.angle_vel
 
         self.pos[0] = (self.pos[0] + self.vel[0]) % Settings.WIDTH
