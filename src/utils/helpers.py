@@ -5,9 +5,7 @@ import random
 import pygame
 
 from config import Settings
-from src.assets.images.img_info import img_info_asteroid, img_asteroid, img_explosion, \
-    img_info_explosion
-from src.assets.sounds.sounds_info import mscExplosion
+from src.utils.resources import img_asteroid, img_info_asteroid, msc_explosion, img_explosion, img_info_explosion
 
 
 def draw_on_screen(screen, image, center_source, width_height_source, center_dest, width_height_dest, rotation=0,
@@ -63,7 +61,7 @@ def group_collide(sp_group, sprite, explosion_group):
             collision_happended = True
             module_sprite = importlib.import_module("src.sprite")
             an_explosion = module_sprite.Sprite(sprite.get_position(), [0, 0], 0, 0, img_explosion, img_info_explosion,
-                                                mscExplosion)
+                                                msc_explosion)
             explosion_group.add(an_explosion)
     return collision_happended
 

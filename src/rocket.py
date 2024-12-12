@@ -1,8 +1,7 @@
 from config import Settings
-from src.assets.images.img_info import img_missile, img_info_missile
-from src.assets.sounds.sounds_info import mscSpaceRocketThrust, mscMissileShot
 from src.sprite import Sprite
 from src.utils.helpers import draw_on_screen, angle_to_vector
+from src.utils.resources import msc_rocket_thrust, img_missile, img_info_missile, msc_missile_shot
 
 
 class SpaceRocket:
@@ -19,12 +18,13 @@ class SpaceRocket:
         self.radius = info.get_radius()
 
     def draw(self, screen):
-        if self.thrust:
-            draw_on_screen(screen, self.image_thrust, self.image_center, self.image_size, self.pos, self.image_size,
-                           self.angle)
-        else:
-            draw_on_screen(screen, self.image, self.image_center, self.image_size, self.pos, self.image_size,
-                           self.angle)
+        if Settings.LIVES > 0:
+            if self.thrust:
+                draw_on_screen(screen, self.image_thrust, self.image_center, self.image_size, self.pos, self.image_size,
+                               self.angle)
+            else:
+                draw_on_screen(screen, self.image, self.image_center, self.image_size, self.pos, self.image_size,
+                               self.angle)
 
     def update(self):
         self.angle += self.angle_vel
@@ -43,9 +43,9 @@ class SpaceRocket:
     def set_thrust(self, on):
         self.thrust = on
         if on:
-            mscSpaceRocketThrust.play()
+            msc_rocket_thrust.play()
         else:
-            mscSpaceRocketThrust.stop()
+            msc_rocket_thrust.stop()
 
     def increment_angle_vel(self):
         self.angle_vel -= .05
@@ -57,7 +57,7 @@ class SpaceRocket:
         forward = angle_to_vector(-self.angle)
         missile_pos = [self.pos[0] + self.radius * forward[0], self.pos[1] + self.radius * forward[1]]
         missile_vel = [self.vel[0] + 6 * forward[0], self.vel[1] + 6 * forward[1]]
-        a_missile = Sprite(missile_pos, missile_vel, self.angle, 0, img_missile, img_info_missile, mscMissileShot)
+        a_missile = Sprite(missile_pos, missile_vel, self.angle, 0, img_missile, img_info_missile, msc_missile_shot)
         missile_group.add(a_missile)
 
     def get_position(self):
